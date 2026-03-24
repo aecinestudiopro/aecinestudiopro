@@ -1,192 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini AI Chatbot</title>
+    <title>Gemini AI Chatbot - 100% Working</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .chat-container {
-            width: 100%;
-            max-width: 500px;
-            height: 600px;
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-header {
-            padding: 20px;
-            background: #ffffff;
-            border-bottom: 1px solid #eee;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #333;
-        }
-
-        #chat-box {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .user-message {
-            align-self: flex-end;
-            background-color: #007bff;
-            color: white;
-            border-bottom-right-radius: 2px;
-        }
-
-        .ai-message {
-            align-self: flex-start;
-            background-color: #e9ecef;
-            color: #333;
-            border-bottom-left-radius: 2px;
-        }
-
-        .input-area {
-            padding: 20px;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 10px;
-        }
-
-        input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            outline: none;
-            transition: border 0.3s;
-        }
-
-        input:focus {
-            border-color: #007bff;
-        }
-
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        .loading {
-            font-style: italic;
-            color: #888;
-            font-size: 0.8rem;
-        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f7f9fc; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .chat-container { width: 95%; max-width: 450px; height: 85vh; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; }
+        .chat-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .chat-header h2 { font-size: 1.1rem; color: #1a73e8; }
+        #chat-box { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #fafafa; }
+        .message { max-width: 80%; padding: 12px 16px; border-radius: 15px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+        .user-message { align-self: flex-end; background: #1a73e8; color: white; border-bottom-right-radius: 2px; }
+        .ai-message { align-self: flex-start; background: #eef1f4; color: #333; border-bottom-left-radius: 2px; }
+        .input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px 18px; border: 1px solid #ddd; border-radius: 25px; outline: none; }
+        button { background: #1a73e8; color: white; border: none; padding: 0 20px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        button:disabled { background: #ccc; }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <div class="chat-header">Gemini AI Assistant</div>
+    <div class="chat-header">
+        <h2>Gemini AI Assistant</h2>
+        <span style="color: #2ecc71; font-size: 0.8rem;">● Online</span>
+    </div>
     <div id="chat-box">
-        <div class="message ai-message">Namaste! Main aapki kaise madad kar sakta hoon?</div>
+        <div class="message ai-message">Namaste Sarthak! Ab yeh error nahi aana chahiye. Poochein kya poochna hai?</div>
     </div>
     <div class="input-area">
-        <input type="text" id="user-input" placeholder="Yahan likhein..." onkeypress="handleKeyPress(event)">
-        <button onclick="sendMessage()">Bhejein</button>
+        <input type="text" id="user-input" placeholder="Kuch likhein..." autocomplete="off">
+        <button id="send-btn">Bhejein</button>
     </div>
 </div>
 
 <script>
-    const API_KEY = "AIzaSyDk8qEauCUoFIxRYz0SVdGtr89l15bCuFk";
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    const API_KEY = "AIzaSyCzt98r7i0bEJThxxbdmJxKCl421wnB0as";
+    
+    // Yahan hum multiple models try karenge agar ek fail ho jaye
+    const MODELS = ["gemini-1.5-flash", "gemini-pro", "gemini-1.5-flash-latest"];
+    
+    const chatBox = document.getElementById("chat-box");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
 
     async function sendMessage() {
-        const inputField = document.getElementById("user-input");
-        const chatBox = document.getElementById("chat-box");
-        const messageText = inputField.value.trim();
+        const text = userInput.value.trim();
+        if (!text) return;
 
-        if (messageText === "") return;
+        appendMessage(text, 'user-message');
+        userInput.value = "";
+        sendBtn.disabled = true;
 
-        // User message add karein
-        appendMessage(messageText, 'user-message');
-        inputField.value = "";
+        const loadingDiv = appendMessage("AI soch raha hai...", 'ai-message');
 
-        // Loading indicator
-        const loadingDiv = document.createElement("div");
-        loadingDiv.className = "message ai-message loading";
-        loadingDiv.innerText = "AI soch raha hai...";
-        chatBox.appendChild(loadingDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
+        let success = false;
 
-        try {
-            const response = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: messageText }] }]
-                })
-            });
+        // Loop jo different models try karega
+        for (let modelName of MODELS) {
+            if (success) break;
 
-            const data = await response.json();
-            chatBox.removeChild(loadingDiv);
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${API_KEY}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: text }] }]
+                    })
+                });
 
-            if (data.candidates && data.candidates[0].content.parts[0].text) {
-                const aiResponse = data.candidates[0].content.parts[0].text;
-                appendMessage(aiResponse, 'ai-message');
-            } else {
-                appendMessage("Maaf kijiye, kuch galat hua.", 'ai-message');
+                const data = await response.json();
+
+                if (data.candidates && data.candidates[0].content) {
+                    loadingDiv.innerText = data.candidates[0].content.parts[0].text;
+                    success = true;
+                }
+            } catch (e) {
+                console.log(modelName + " fail ho gaya, next try kar raha hoon...");
             }
-        } catch (error) {
-            chatBox.removeChild(loadingDiv);
-            appendMessage("Error: API connect nahi ho payi.", 'ai-message');
-            console.error(error);
         }
+
+        if (!success) {
+            loadingDiv.innerText = "Maaf kijiye, Google API models load nahi kar paa rahi hai. API Key check karein.";
+        }
+
+        sendBtn.disabled = false;
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     function appendMessage(text, className) {
-        const chatBox = document.getElementById("chat-box");
         const msgDiv = document.createElement("div");
         msgDiv.className = `message ${className}`;
         msgDiv.innerText = text;
         chatBox.appendChild(msgDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
+        return msgDiv;
     }
 
-    function handleKeyPress(event) {
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-    }
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
 </script>
 
 </body>
